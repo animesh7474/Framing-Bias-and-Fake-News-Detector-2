@@ -5,8 +5,7 @@ Domain: NLP + Software Development & Operations
 
 import os
 import json
-import asyncio
-from groq import AsyncGroq
+from groq import Groq
 from logger import get_logger
 
 log = get_logger("llm_service")
@@ -14,7 +13,7 @@ log = get_logger("llm_service")
 class LLMService:
     """
     Handles communication with GroqCloud for real-time news report generation.
-    Supports asynchronous requests and robust fallback mechanisms.
+    Supports robust fallback mechanisms.
     """
 
     def __init__(self, api_key: str = None):
@@ -26,11 +25,11 @@ class LLMService:
     @property
     def client(self):
         if self._client is None and self.api_key:
-            self._client = AsyncGroq(api_key=self.api_key)
-            log.info("Async Groq client initialized lazily.")
+            self._client = Groq(api_key=self.api_key)
+            log.info("Groq client initialized lazily.")
         return self._client
 
-    async def analyze_article(self, text: str, ml_prediction: str, confidence: float, news_context: list, eli5: bool = False):
+    def analyze_article(self, text: str, ml_prediction: str, confidence: float, news_context: list, eli5: bool = False):
         """
         Calls Groq LLM to perform deep framing bias and fake news analysis.
         If 'eli5' is True, generates a simplified 'Explain Like I'm 5' version.
@@ -68,7 +67,7 @@ class LLMService:
         """
 
         try:
-            response = await self.client.chat.completions.create(
+            response = self.client.chat.completions.create(
                 messages=[{"role": "user", "content": base_prompt}],
                 model="llama-3.3-70b-versatile",
                 response_format={"type": "json_object"}

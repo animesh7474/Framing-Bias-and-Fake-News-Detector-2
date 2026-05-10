@@ -66,7 +66,7 @@ def health():
 # ── Full Pipeline: ML + News + LLM ───────────────────────────────────────────
 @app.route("/api/analyze", methods=["POST"])
 @limiter.limit("10 per minute")
-async def analyze():
+def analyze():
     data = request.get_json()
     if not data or not data.get("text", "").strip():
         return jsonify({"error": "Field 'text' is required"}), 400
@@ -81,7 +81,7 @@ async def analyze():
 
     try:
         eli5 = data.get("eli5", False)
-        result = await run_full_analysis(text, eli5=eli5)
+        result = run_full_analysis(text, eli5=eli5)
         
         # ── Service Calls: Capture & Log ──────────────────────────────────
         ml_data = result.get("ml", {})
@@ -100,7 +100,7 @@ async def analyze():
 
 # ── Fast ML-only predict ──────────────────────────────────────────────────────
 @app.route("/api/predict", methods=["POST"])
-async def predict_route():
+def predict_route():
     data = request.get_json()
     if not data or not data.get("text", "").strip():
         return jsonify({"error": "Field 'text' is required"}), 400

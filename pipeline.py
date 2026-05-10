@@ -18,13 +18,13 @@ log = get_logger("pipeline")
 _threat_analyzer = NLPPipeline()
 _llm_service = LLMService()
 
-async def run_full_analysis(text: str, eli5: bool = False) -> dict:
+def run_full_analysis(text: str, eli5: bool = False) -> dict:
     """
-    Full 4-stage pipeline (Async Orchestration):
+    Full 4-stage pipeline (Sync Orchestration):
       Stage 1 — ML Service: classification + confidence + keywords
-      Stage 2 — News Service: async DDG search for context
+      Stage 2 — News Service: sync DDG search for context
       Stage 3 — NLP Service: deep threat analysis (manipulation/bias)
-      Stage 4 — LLM Service: async comparative report
+      Stage 4 — LLM Service: sync comparative report
     """
     started = datetime.now(timezone.utc)
     log.info(f"Pipeline [SERVICE-LAYER] started: {text[:60]}")
@@ -44,13 +44,13 @@ async def run_full_analysis(text: str, eli5: bool = False) -> dict:
         "threat_analysis":  threat,
     }
 
-    # ── Stage 3: News Context (ASYNC) ────────────────────────────────────────
+    # ── Stage 3: News Context (SYNC) ─────────────────────────────────────────
     log.info("[Stage 3] Fetching news context...")
-    articles = await fetch_related_news(text, max_results=4)
+    articles = fetch_related_news(text, max_results=4)
 
-    # ── Stage 4: LLM Analysis (ASYNC) ────────────────────────────────────────
+    # ── Stage 4: LLM Analysis (SYNC) ─────────────────────────────────────────
     log.info("[Stage 4] Generating LLM comparison report...")
-    llm_result = await _llm_service.analyze_article(text, pred, conf, articles, eli5=eli5)
+    llm_result = _llm_service.analyze_article(text, pred, conf, articles, eli5=eli5)
 
     # ── Final Composition ───────────────────────────────────────────────────
     elapsed = (datetime.now(timezone.utc) - started).total_seconds()

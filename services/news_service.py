@@ -3,65 +3,39 @@ news_service.py — Service layer for non-blocking news context retrieval.
 Domain: Computer Networks + Big Data Analytics
 """
 
-import asyncio
 import re
-import time
-from duckduckgo_search import DDGS
+import urllib.parse
+import feedparser
 from logger import get_logger
 
 log = get_logger("news_service")
 
-async def fetch_related_news(text: str, max_results: int = 5):
+def fetch_related_news(text: str, max_results: int = 5):
     """
-    Fetches live news context with robust cleaning, retries, and fallback to text search.
+    Fetches live news context via Google News RSS synchronously.
+    Extremely stable, no compiled dependencies like curl_cffi.
     """
-    # 1. Clean query: Remove special chars that might confuse search engine
     clean_text = re.sub(r"[^a-zA-Z0-9\s]", " ", text)
-    query = " ".join(clean_text.split())[:120] # Shorten slightly for better relevance
+    query = " ".join(clean_text.split())[:120]
     
     log.info(f"News Search started for query: '{query[:60]}...'")
     
-    async def _try_search(mode="news"):
-        for attempt in range(2):
-            try:
-                # Use a new DDGS instance per attempt to refresh state
-                with DDGS() as ddgs:
-                    if mode == "news":
-                        items = ddgs.news(query, safesearch="off", max_results=max_results)
-                    else:
-                        # Fallback to general text search if news fails (often less restricted)
-                        items = ddgs.text(query, safesearch="off", max_results=max_results, timelimit="d")
-                    
-                    if items:
-                        log.info(f"DDGS {mode} results found: {len(items)} (Attempt {attempt+1})")
-                        return items
-            except Exception as e:
-                log.warning(f"DDGS {mode} Attempt {attempt+1} failed: {e}")
-                if "403" in str(e) or "Ratelimit" in str(e):
-                    await asyncio.sleep(1.5) # Wait before retry
-                else:
-                    break # Don't retry on other errors
-        return []
-
     try:
-        # Try News Search first
-        results_raw = await _try_search(mode="news")
+        encoded_query = urllib.parse.quote_plus(query)
+        rss_url = f"https://news.google.com/rss/search?q={encoded_query}&hl=en-US&gl=US&ceid=US:en"
         
-        # If News failed, fallback to Text search (with 'day' filter for recency)
-        if not results_raw:
-            log.info("News search returned zero results. Falling back to Text search...")
-            results_raw = await _try_search(mode="text")
-
+        feed = feedparser.parse(rss_url)
         results = []
-        for r in results_raw:
-            results.append({
-                "title": r.get("title", "No Title"),
-                "source": r.get("source") or r.get("href", "Unknown Source"),
-                "date": r.get("date", "Recent"),
-                "link": r.get("url") or r.get("href", ""),
-                "snippet": r.get("body") or r.get("snippet", "No description available.")
-            })
         
+        for entry in feed.entries[:max_results]:
+            results.append({
+                "title": entry.get("title", "No Title"),
+                "source": entry.get("source", {}).get("title", "Google News"),
+                "date": entry.get("published", "Recent"),
+                "link": entry.get("link", ""),
+                "snippet": entry.get("title", "No description available.")  # Google RSS puts most info in title
+            })
+            
         log.info(f"Final news context count: {len(results)}")
         return results
     except Exception as e:
