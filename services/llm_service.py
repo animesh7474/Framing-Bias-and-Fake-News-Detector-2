@@ -21,10 +21,14 @@ class LLMService:
         self.api_key = api_key or os.getenv("GROQ_API_KEY")
         if not self.api_key:
             log.warning("GROQ_API_KEY NOT FOUND. LLM logic will use fallback.")
-            self.client = None
-        else:
-            self.client = AsyncGroq(api_key=self.api_key)
-            log.info("Async Groq client initialized.")
+        self._client = None
+
+    @property
+    def client(self):
+        if self._client is None and self.api_key:
+            self._client = AsyncGroq(api_key=self.api_key)
+            log.info("Async Groq client initialized lazily.")
+        return self._client
 
     async def analyze_article(self, text: str, ml_prediction: str, confidence: float, news_context: list, eli5: bool = False):
         """

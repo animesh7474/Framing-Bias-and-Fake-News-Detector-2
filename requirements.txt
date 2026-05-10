@@ -18,3 +18,4 @@ python-dotenv
 duckduckgo-search
 gunicorn
 langdetect
+asgiref

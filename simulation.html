@@ -1180,6 +1180,13 @@
         });
         
         updateStages(2);
+        
+        if (!r.ok) {
+           const errText = await r.text();
+           console.error("SERVER ERROR:", r.status, errText);
+           throw new Error("Server returned " + r.status + ". See console.");
+        }
+        
         const d = await r.json();
         
         updateStages(4);
@@ -1189,6 +1196,7 @@
           renderAll(d);
         }, 800);
       } catch (e) {
+        console.error("Fetch failed:", e);
         document.getElementById("stageLoader").classList.remove("show");
         btn.disabled = false;
         localFallback(text);
