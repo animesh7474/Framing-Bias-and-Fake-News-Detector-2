@@ -6,7 +6,7 @@ Domain: Computer Networks + Big Data Analytics
 import asyncio
 import re
 import time
-from ddgs import DDGS
+from duckduckgo_search import DDGS
 from logger import get_logger
 
 log = get_logger("news_service")
