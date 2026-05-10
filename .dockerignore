@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.git/
+.github/
+.pytest_cache/
+*.docx
+*.pptx
+assets/
+data_versions/
+model_backups/
+tests/
+app.log

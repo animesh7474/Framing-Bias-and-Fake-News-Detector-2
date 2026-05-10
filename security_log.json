@@ -3808,5 +3808,37 @@
     },
     "flagged_words": [],
     "timestamp": "2026-04-23T18:44:55.438139Z"
+  },
+  {
+    "text_snippet": "Big blow to AAP as Chadha, 6 more Rajya Sabha MPs quit, join BJP\nIndia News: NEW",
+    "threat_level": "MEDIUM",
+    "manipulation_score": 0.3156,
+    "true_bias_score": 0.4546,
+    "breakdown": {
+      "propaganda_keywords": 0.0,
+      "emotional_language": 0.296,
+      "adversarial_chars": 0.0,
+      "repetition_patterns": 0.1143,
+      "subjectivity_ratio": 0.5357,
+      "reading_grade_level": 16.6
+    },
+    "flagged_words": [],
+    "timestamp": "2026-04-25T04:30:11.304603Z"
+  },
+  {
+    "text_snippet": "Big blow to AAP as Chadha, 6 more Rajya Sabha MPs quit, join BJP\nIndia News: NEW",
+    "threat_level": "MEDIUM",
+    "manipulation_score": 0.3156,
+    "true_bias_score": 0.4546,
+    "breakdown": {
+      "propaganda_keywords": 0.0,
+      "emotional_language": 0.296,
+      "adversarial_chars": 0.0,
+      "repetition_patterns": 0.1143,
+      "subjectivity_ratio": 0.5357,
+      "reading_grade_level": 16.6
+    },
+    "flagged_words": [],
+    "timestamp": "2026-04-25T04:50:07.933244Z"
   }
 ]

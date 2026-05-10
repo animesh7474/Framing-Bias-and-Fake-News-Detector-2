@@ -15,7 +15,7 @@ RESULTS_CSV    = os.path.join(BASE_DIR, "model_comparison_results.csv")
 
 # ─── Server ───────────────────────────────────────────────────────────────────
 API_HOST       = "0.0.0.0"
-API_PORT       = 5000
+API_PORT       = int(os.environ.get("PORT", 5000))
 DEBUG_MODE     = False
 
 # ─── Model ────────────────────────────────────────────────────────────────────

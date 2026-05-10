@@ -13,4 +13,5 @@ RUN python dataset_generator.py && python framing_bias_detector.py
 
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+# Use gunicorn for production serving, binding to the PORT env variable (default 5000)
+CMD ["sh", "-c", "gunicorn -b 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 app:app"]
