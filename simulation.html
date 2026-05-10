@@ -1055,7 +1055,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
-    const API = window.location.port === "5000" ? "" : "http://localhost:5000";
+    const API = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
+      ? (window.location.port === "5000" ? "" : "http://localhost:5000") 
+      : "";
     const FC = { Economic: "#6366f1", Political: "#8b5cf6", Social: "#10b981", Security: "#f43f5e", Environment: "#06b6d4" };
     const FI = { Economic: "trending-up", Political: "users", Social: "message-square", Security: "shield", Environment: "cloud" };
     const MC = ["#6366f1", "#8b5cf6", "#10b981", "#f59e0b"];
