@@ -135,8 +135,10 @@ class ModelRetrainer:
         metrics = {"accuracy": 0.88, "f1": 0.87, "timestamp": datetime.now().isoformat()}
         
         # 4. Save Versioned
+        os.makedirs(MODELS_DIR, exist_ok=True)
         next_v = len(os.listdir(MODELS_DIR)) + 1
         model_path = os.path.join(MODELS_DIR, f"model_v{next_v}.pkl")
+        os.makedirs(DATA_VERSIONS_DIR, exist_ok=True)
         data_path = os.path.join(DATA_VERSIONS_DIR, f"dataset_v{next_v}.csv")
         # joblib.dump(mock_model, model_path)
         
@@ -231,6 +233,7 @@ def log_explanation(text: str, ml_res: dict):
                 logs = []
     
     logs.append(entry)
+    os.makedirs(os.path.dirname(EXPLANATIONS_LOG), exist_ok=True)
     with open(EXPLANATIONS_LOG, "w", encoding="utf-8") as f:
         json.dump(logs[-100:], f, indent=2)
 
