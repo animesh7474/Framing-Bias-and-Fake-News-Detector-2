@@ -1,46 +1,143 @@
-# Fake-News-Detection-Project
-Final Year College Project with Project Synopsis, Report, PPT, Code and Documents 
+# 🛡️ Hybrid AI Intelligence Dashboard — Framing Bias & Fake News Detector
 
-### Project Youtube Explanation : https://youtu.be/DQRZHOpU9bU
+A production-grade, multi-layered AI system for detecting **Framing Bias**, **Fake News**, and **Narrative Manipulation** in real-time. Built as a B.Tech Capstone Project.
 
-![Screenshot 2021-12-03 at 12 25 50 AM](https://user-images.githubusercontent.com/28294942/144485388-ab0cb531-51b8-457e-8984-f2a54aeb4ea3.png)
+---
 
-### PPT : [CLICK](https://docs.google.com/presentation/d/e/2PACX-1vRN-vXLHXot00PeBUpKUB_dnPci41lBuLDHj6cr5P7Zgza-MUIc7xiTt0eQZHQ-og-qOzBC1jhUG6uW/pub?start=true&loop=false&delayms=2000)
+## 🚀 Live Demo
 
-### RESEARCH BASE PAPER: [Click](https://www.hindawi.com/journals/complexity/2020/8885861/)
+> Deploy on [Render](https://render.com) for free — see [Deployment](#-deployment) below.
 
-### PROJECT DEMO CODE: [Click](https://github.com/Vatshayan/Fake-News-Detection-Project/blob/main/fake_news_code_d.ipynb) [I have made code private, if you need then mail me I will send you asap]
+---
 
-Project is New and Unique (Totally based on Research paper with new idea and great result) 
+## ✨ Key Features
 
+| Feature | Description |
+|---|---|
+| **4-Stage Hybrid AI Pipeline** | ML Classification → NLP Threat Scoring → Live News Context → LLM Comparative Verdict |
+| **Local ML Model** | Logistic Regression + TF-IDF for high-speed frame classification (83.2% accuracy) |
+| **Cloud LLM Integration** | LLaMA 3.3 70B via GroqCloud for deep semantic reasoning |
+| **Live Context Retrieval** | Async DuckDuckGo news search to validate claims against real-world events |
+| **Explainable AI (XAI)** | LIME-based keyword highlighting for transparent decision-making |
+| **Security Intelligence Log** | Persistent threat logging for forensic audit trails |
+| **Interactive Dashboard** | Responsive dark-mode UI with real-time analysis visualizations |
 
-### Abstract
-The advent of the World Wide Web and the rapid adoption of social media platforms (such as Facebook and Twitter) paved the way for information dissemination that has never been witnessed in the human history before. With the current usage of social media platforms, consumers are creating and sharing more information than ever before, some of which are misleading with no relevance to reality. Automated classification of a text article as misinformation or disinformation is a challenging task. Even an expert in a particular domain has to explore multiple aspects before giving a verdict on the truthfulness of an article. In this work, we propose to use machine learning ensemble approach for automated classification of news articles. Our study explores different textual properties that can be used to distinguish fake contents from real. By using those properties, we train a combination of different machine learning algorithms using various ensemble methods and evaluate their performance on 4 real world datasets. Experimental evaluation confirms the superior performance of our proposed ensemble learner approach 
+---
 
-Project is in Python Programming.
+## 🏗️ System Architecture
 
-______________________________________________________________________________________________________________
-<h1 align="center"> नमस्ते (Namaste) 🙏🏻 , I'm Shivam Vatshayan <img src="https://raw.githubusercontent.com/ABSphreak/ABSphreak/master/gifs/Hi.gif" width="30px"> ! </h1>
+```
+┌──────────────────────────────────────────────┐
+│              Web Dashboard (UI)              │
+│         HTML5 / CSS3 / Vanilla JS            │
+└──────────────────┬───────────────────────────┘
+                   │  REST API (JSON)
+┌──────────────────▼───────────────────────────┐
+│           Flask Backend (app.py)             │
+│         Pipeline Orchestrator                │
+└──┬───────┬───────────┬───────────┬───────────┘
+   │       │           │           │
+   ▼       ▼           ▼           ▼
+┌──────┐ ┌──────┐ ┌─────────┐ ┌──────────┐
+│  ML  │ │ NLP  │ │  News   │ │   LLM    │
+│Model │ │Score │ │ Search  │ │ LLaMA3.3 │
+└──────┘ └──────┘ └─────────┘ └──────────┘
+```
 
-**You Can use this Beautiful Project for your college Project and get good marks too.**
+---
 
-Email me Now **vatshayan007@gmail.com** to get this Full Project Code, PPT, Report, Synopsis, Video Presentation and Research paper of this Project.
+## 🛠️ Tech Stack
 
-💌 Feel free to contact me for any kind of help on any projects.
- 
-### HOW TO RUN THE PROJECT
-⚡ Email me at **vatshayan007@gmail.com** to get a detailed Guide report with Code to run the project with source Code.
+- **Backend:** Python 3.11, Flask 3.0, Gunicorn
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript, Chart.js, Feather Icons
+- **ML/NLP:** Scikit-learn, LIME, VADER, TextBlob, spaCy
+- **Cloud AI:** Groq SDK (LLaMA 3.3 70B)
+- **News API:** DuckDuckGo Search SDK
 
-### Need Code, Documents & Explanation video ? 
+---
 
-## How to Reach me :
+## ⚡ Quick Start (Local)
 
-### Mail : vatshayan007@gmail.com 
+```bash
+# 1. Clone the repository
+git clone https://github.com/animesh7474/Framing-Bias-and-Fake-News-Detector-2.git
+cd Framing-Bias-and-Fake-News-Detector-2
 
-### WhatsApp: **+91 9310631437** (Helping 24*7) **[CHAT](https://wa.me/message/CHWN2AHCPMAZK1)** 
+# 2. Create virtual environment
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+# source .venv/bin/activate  # macOS/Linux
 
-### Website : https://www.finalproject.in/
+# 3. Install dependencies
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 
-### 1000 Computer Science Projects : https://www.computer-science-project.in/
+# 4. Set up environment variables
+# Create a .env file with:
+# GROQ_API_KEY=your_groq_api_key_here
 
-Mail/Message me for Projects Help 🙏🏻
+# 5. Generate dataset & train the model
+python dataset_generator.py
+python framing_bias_detector.py
+
+# 6. Run the server
+python app.py
+```
+
+Open **http://127.0.0.1:5000** in your browser.
+
+---
+
+## 🌐 Deployment
+
+This project is deployment-ready for **Render (Free Tier)**:
+
+1. Push this repo to GitHub.
+2. Go to [Render.com](https://render.com) → **New > Web Service** → Connect this repo.
+3. Render auto-detects the `Dockerfile` and builds.
+4. Add `GROQ_API_KEY` in **Environment Variables**.
+5. Deploy — your live URL will be `https://your-app.onrender.com`.
+
+---
+
+## 📂 Project Structure
+
+```
+project/
+├── app.py                  # Flask REST API
+├── pipeline.py             # 4-Stage Orchestrator
+├── config.py               # Centralized Configuration
+├── services/
+│   ├── ml_service.py       # Logistic Regression Classifier
+│   ├── nlp_service.py      # Lexical Threat Scorer
+│   ├── news_service.py     # Live News Context Fetcher
+│   ├── llm_service.py      # LLaMA 3.3 Integration
+│   └── retraining_service.py  # Active Learning Loop
+├── simulation.html         # Interactive Dashboard UI
+├── Dockerfile              # Production Container
+└── requirements.txt        # Python Dependencies
+```
+
+---
+
+## 📊 Results
+
+| Metric | Value |
+|---|---|
+| **Accuracy** | 83.2% |
+| **F1-Score** | 0.831 |
+| **Precision** | 0.832 |
+| **End-to-End Latency** | ~3.4 seconds |
+
+---
+
+## 👤 Author
+
+**Animesh Hole**
+- GitHub: [@animesh7474](https://github.com/animesh7474)
+
+---
+
+## 📄 License
+
+This project is for academic and educational purposes.
